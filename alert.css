@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="submit"] {
+    margin: 10px;
+    padding: 5px;
+}
+
+#alertBox {
+    width: 200px;
+    background-color: lightgreen;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin: 0 auto;
+    display: none;
+}
+
+.hide {
+    display: none;
+}

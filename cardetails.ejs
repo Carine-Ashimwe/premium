@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cars</title>
+</head>
+
+<body>
+    <h1>Cars</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Car</th>
+                <th>Car Type</th>
+                <th>Car Brand</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% Car_details.forEach(function(car) { %>
+                <tr>
+                    <td>
+                        <%= car.Id %>
+                    </td>
+                    <td>
+                        <%= car.Car %>
+                    </td>
+                    <td>
+                        <%= car.cartype %>
+                    </td>
+                    <td>
+                        <%= car.carbrand %>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>
+

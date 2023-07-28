@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<head>
+  <title>Dashboard</title>
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/logheader.css">
+<link rel="stylesheet" href="styles/logmain.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+            integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"/>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="dash.js"></script>
+
+<body>
+  <nav class="header">
+    <div class="left-section">
+        <!-- <img class="premium-icon" src="icons/left0.png"> -->
+     <img class="hamburger-menu" 
+        src="log icons/hamburger-menu.svg">
+        <div class="home">Home</div>
+        <div class="contact">Contact</div>
+        </div>
+    <div class="middle-section">
+</div>
+<div class="right-section">
+    <input class="search-bar" type=" text"
+    placeholder="search" >
+    <button class="search-button">
+    <img class="search-icon"
+    src="log icons/search.svg">
+    <div class="tooltip">Search</div>
+</button>
+</div>
+</nav>
+<div class="sidebar">
+    <div class="sidebar-link">
+        <i class="fa fa-sharp fa-solid fa-gauge-high"></i>
+        <div class="d1">
+            <p class="d01">Dashboard</p>
+        </div>
+    </div>
+    <div class="sidebar-link">
+        <i class="fa-solid fa-table"></i>
+        <i class="fas fa-angle-left right" id="dropdown-toggle"></i>
+        <div class="d2">
+            <p class="d02">Forms</p>
+            <div class="dropdown-content" id="dropdown-content">
+                <!-- Link to Car_Details table -->
+                 <a href="form2.html" class="table1">
+                    <input type="radio" name="table-option" id="car-details-option">
+                    <label for="car-details-option">Car_Details</label><br>
+                </a>
+                <!-- Link to Cars_info table -->
+                <a href="form1.html" class="table2">
+                    <input type="radio" name="table-option" id="cars-info-option">
+                    <label for="cars-info-option">Cars_Info</label><br>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-link">
+        <i class="fas fa-edit"></i>
+        <i class="fas fa-angle-left right" id="dropdown-toggle1"></i>
+        <div class="d3">
+          <p class="d03">Tables</p>
+          <div class="dropdown-content1" id="dropdown-content1">
+            <!-- Link to Car_Details table -->
+            <a href="car_details.html" class="table1">
+              <input type="radio" name="table-option" id="car-details-option">
+              <label for="car-details-option">Car_Details</label><br>
+          </a>
+          <!-- Link to Cars_info table -->
+          <a href="cars_info.html" class="table2">
+              <input type="radio" name="table-option" id="cars-info-option">
+              <label for="cars-info-option">Cars_Info</label><br>
+          </a>
+          </div>
+        </div>
+      </div>      
+</div>
+<div class="h1">
+    <h class="h01">Dashboard</h>
+<!-- </div>
+<div class="box-container">
+<div class="box1-container"></div>
+<div class="box2-container"></div>
+<div class="box3-container"></div>
+<div class="box4-container"></div>
+</div> -->
+<script>
+    $(document).ready(function() {
+      // Add click event handler to the "fas fa-angle-left" icon
+      $("#dropdown-toggle").click(function() {
+        // Toggle the visibility of the sub-menu items
+        $("#dropdown-content").toggle();
+      });
+    });
+    $(document).ready(function() {
+      // Add click event handler to the "fas fa-angle-left" icon
+      $("#dropdown-toggle1").click(function() {
+        // Toggle the visibility of the sub-menu items
+        $("#dropdown-content1").toggle();
+      });
+    });
+
+    </script>
+</body>
+</html>

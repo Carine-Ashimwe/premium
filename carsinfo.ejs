@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cars</title>
+</head>
+
+<body>
+    <h1>Cars</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Carpower</th>
+                <th>Cardisplacement</th>
+                <th>Carprice</th>
+                <th>CarImages</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% Cars_info.forEach(function(car) { %>
+                <tr>
+                    <td>
+                        <%= car.Id %>
+                    </td>
+                    <td>
+                        <%= car.carpower %>
+                    </td>
+                    <td>
+                        <%= car.cardisplacement %>
+                    </td>
+                    <td>
+                        <%= car.carprice %>
+                    </td>
+                    <!-- Display uploaded image or default image in table using EJS -->
+<td>
+    <% if (car.carImages) { %>
+        <img src="<%= car.carImages %>" alt="Car Image">
+    <% } else { %>
+        <img src="/images/default_car_image.jpg" alt="Default Car Image">
+    <% } %>
+</td>
+
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

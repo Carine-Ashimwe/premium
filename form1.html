@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>form1</title>
+    <link rel="stylesheet" href="styles/form1.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="dash.js"></script>
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="form1">
+        <h1 class="form-title">Car Premium</h1>
+      </div>
+      <form id="myForm" enctype="multipart/form-data">
+        <label for="name">ID</label>
+        <input type="text" id="id" name="id" /><br />
+
+        <label for="power">Car Power</label>
+        <input type="text" id="carpower" name="carpower" /><br />
+
+        <label for="displacement">Car Displacement</label>
+        <input type="text" id="cardisplacement" name="cardisplacement" /><br />
+
+        <label for="price">Car Price</label>
+        <input type="text" id="carprice" name="carprice" /><br />
+
+        <label for="file">Car Image Upload</label>
+        <input type="file" id="carImages" name="carImages" /><br />
+
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+          <label class="form-check-label" for="exampleCheck1"
+            >Check me out</label
+          >
+        </div>
+        <input type="submit" value="Submit" id="submit" />
+      </form>
+    </div>
+    <script>
+$(document).ready(function() {
+    $('#myForm').on('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const carPower = formData.get('carpower');
+        const carDisplacement = formData.get('cardisplacement');
+        const carPrice = formData.get('carprice');
+        const carImage = event.target.carImages.files[0]; // get the File object from the input field
+
+        formData.delete('carImages'); // remove the existing file from FormData
+        formData.append('carImages', carImage); // append the new file to FormData
+
+        const carData = {
+            carpower: carPower,
+            cardisplacement: carDisplacement,
+            carprice: carPrice
+        };
+
+        formData.append('carData', JSON.stringify(carData)); // append the carData object as a JSON string to FormData
+
+        // Send the FormData object to the server using fetch
+        fetch('http://localhost:3000/Cars_info', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Car data submitted successfully');
+                location.reload(); // Reload the page after successful form submission
+            } else {
+                console.error('Error submitting car data');
+            }
+        })
+        .catch(error => console.error(error));
+    });
+});
+
+    </script>
+  </body>
+</html>

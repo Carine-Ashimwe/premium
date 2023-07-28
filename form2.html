@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>form2</title>
+    <link rel="stylesheet" href="styles/form1.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="dash.js"></script>
+</head>
+<body>
+<div class="form-container">
+    <div class="form1">
+        <h1 class="form-title">Car Premium</h1>
+    </div>
+    <form id="myForm" action="http://localhost:3000/Car_details" method="post">
+        <label for="name">ID</label>
+        <input type="text" id="name" name="Id"><br>
+
+        <label for="carbrand">Car Brand</label>
+        <select id="carbrand" name="carbrand">
+            <option value="AlfaRomeo">AlfaRomeo</option>
+            <option value="Alpine">Alpine</option>
+            <option value="BMW">BMW</option>
+            <option value="Berlina">Berlina</option>
+            <option value="Citroen">Citroen</option>
+            <option value="Cupra">Cupra</option>
+            <option value="Ford">Ford</option>
+            <option value="Mahindra">Mahindra</option>
+            <option value="Mercedes">Mercedes</option>
+            <option value="Suzuki">Suzuki</option>
+            <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+        </select><br>
+
+        <label for="car">CarId</label>
+        <input type="text" id="carId" name="carId"><br>
+
+        <label for="caty">Car Type</label>
+        <input type="text" id="cartype" name="cartype"><br>
+
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script>
+    document.querySelector('#myForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Get form data
+        const formData = new FormData(event.target);
+        const Id = formData.get('Id');
+        const carId = formData.get('carId');
+        const carBrand = formData.get('carbrand');
+        const carType = formData.get('cartype');
+        
+
+        // Create car data object
+        const carData = {
+            Id: Id,
+            carId: carId,
+            carbrand: carBrand,
+            cartype: carType
+        };
+        
+        try {
+            const response = await $.ajax({
+                url: 'http://localhost:3000/Car_details',
+                method: 'POST',
+                data: JSON.stringify(carData),
+                contentType: 'application/json', // Set the Content-Type header
+                success: function(data) {
+                    // Handle success
+                    console.log('Data inserted successfully:', data);
+                    // You can also update the table here if needed
+                },
+                error: function(error) {
+                    // Handle error
+                    console.error('Error inserting data:', error);
+                }
+            });
+        } catch (error) {
+            console.error('Error inserting data:', error);
+        }
+    });
+
+const carBrandSelect = document.getElementById('carbrand');
+const carIdInput = document.getElementById('carId');
+
+const CarIdMap = {
+    AlfaRomeo: 1,
+    Alpine: 2,
+    BMW: 3,
+    Berlina: 4,
+    Citroen: 5,
+    Cupra: 6,
+    Ford: 7,
+    Mahindra: 8,
+    Mercedes: 9,
+    Suzuki: 10,
+    VOLKSWAGEN: 11
+};
+
+carBrandSelect.addEventListener('change', () => {
+    const selectedCarBrand = carBrandSelect.value;
+    const selectedCarId = CarIdMap[selectedCarBrand];
+    carIdInput.value = selectedCarId;
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Datatables</title>
+    <link rel="stylesheet" href="styles/table2.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="dash.js"></script>
+</head>
+<body>  
+    <div class="table2">
+        <h1 class="car-d">Cars_Information</h1>
+    </div>
+    <div class="table-container">
+        <div style="overflow: auto; height: 320px;">
+        <table id="car-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Carpower</th>
+                    <th>Cardisplacement</th>
+                    <th>Carprice</th>
+                    <th>CarImages</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+        </div>
+    </div>
+    <script>
+        const table = document.querySelector('#car-table');
+        fetch('http://localhost:3000/Cars_info')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((car, index) => {
+                    const row = table.insertRow();
+                    const idCell = row.insertCell();
+                    const carPowerCell = row.insertCell();
+                    const carDisplacementCell = row.insertCell();
+                    const carPriceCell = row.insertCell();
+                    const carImagesCell = row.insertCell();
+                    const editCell = row.insertCell();
+                    const deleteCell = row.insertCell();
+                    idCell.textContent = index + 1;
+                    carPowerCell.textContent = car.carpower;
+                    carDisplacementCell.textContent = car.cardisplacement;
+                    carPriceCell.textContent = car.carprice;
+                    carImagesCell.textContent = car.carImages;
+
+                    // Add clickable word for edit
+                    const editWord = document.createElement("span");
+                    editWord.textContent = "Edit";
+                    editWord.style.color = "black";
+                    editWord.style.cursor = "pointer";
+                    editWord.addEventListener("click", function() {
+                        const row = this.parentNode.parentNode;
+                        const carId = row.cells[0].textContent;
+                        const newCarType = prompt("Enter new car type:");
+                        const newCarBrand = prompt("Enter new car brand:");
+                        // Send PUT request to server-side endpoint to update car details
+                        fetch(`http://localhost:3000/Car_details/${carId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({cartype: newCarType, carbrand: newCarBrand})
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // If response is successful, update the data in the HTML table
+                                carTypeCell.textContent = newCarType;
+                                carBrandCell.textContent = newCarBrand;
+                                console.log('Car details updated successfully');
+                            } else {
+                                console.error('Error updating car details in database');
+                            }
+                        })
+                        .catch(error => console.error(error));
+                    });
+                    editCell.appendChild(editWord);
+
+                    // Create a clickable word for delete action
+                    const deleteLink = document.createElement("span");
+                    deleteLink.textContent = "Delete";
+                    deleteLink.style.color = "black";
+                    deleteLink.style.cursor = "pointer";
+                    deleteLink.addEventListener("click", function() {
+                        const row = this.parentNode.parentNode;
+                        const carId = row.cells[0].textContent;
+                        fetch(`http://localhost:3000/Cars_info/${carId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                table.deleteRow(row.rowIndex);
+                            } else {
+                                console.error('Error deleting car from database');
+                            }
+                        })
+                        .catch(error => console.error(error));
+                    });
+                    deleteCell.appendChild(deleteLink);
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image CRUD Test</title>
+  </head>
+  <body>
+    <h1>Image CRUD Test</h1>
+    <form action="http://localhost:3000/images" method="POST" enctype="multipart/form-data">
+      <input type="file" name="image" />
+      <button type="submit">Upload</button>
+    </form>
+    <h2>Images</h2>
+    <ul id="images"></ul>
+    <script>
+      fetch('http://localhost:3000/images', { credentials: 'same-origin' })
+        .then((response) => response.json())
+        .then((images) => {
+          const imagesList = document.getElementById('images');
+          images.forEach((image) => {
+            const li = document.createElement('li');
+            const img = document.createElement('img');
+            img.src = `uploads/${image.name}`;
+            img.alt = image.name;
+            li.appendChild(img);
+            imagesList.appendChild(li);
+          });
+        });
+    </script>
+  </body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Form</title>
+    <script src="log.js"></script>
+</head>
+<body>
+	<h2>Login Form</h2>
+    <div id="login-form">
+        <form>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required><br><br>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required><br><br>
+          <input type="submit" value="Login">
+        </form>
+      </div>
+      
+      <div class="middle-section">
+        <!-- Car data will be dynamically added here -->
+      </div>
+      <script>
+        // Function to authenticate the user
+function login(username, password) {
+  $.ajax({
+    method: 'POST',
+    url: 'http://localhost:3000/login',
+    data: { username: username, password: password }
+  }).done(function(response) {
+    if (response.success) {
+      // Authentication successful, display car data
+      displayCarInfo();
+    } else {
+      alert('Invalid username or password');
+    }
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.log('Error: ' + errorThrown);
+  });
+}
+
+
+
+      </script>
+      
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Datatables</title>
+    <link rel="stylesheet" href="styles/table1.css">
+    <script src="dash.js"></script>
+</head>
+<body>
+    <div class="table2">
+        <h1 class="car-d1">Car_Details</h1>
+    </div>
+    <div class="table-container">
+        <table id="car-table" width="100%" border="1" cellspacing="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CarId</th>
+                    <th>Car Type</th>
+                    <th>Car Brand</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <script>
+        const table = document.querySelector('#car-table'); // Get reference to the table element in HTML
+        fetch('http://localhost:3000/Car_details') // Update the URL to the correct JSON data source
+            .then(response => response.json()) // Convert response to JSON
+            .then(data => {
+                data.forEach((car,index) => { // Loop through each car object in the JSON data
+                    const row = table.insertRow();
+                    const idCell = row.insertCell();
+                    const carIdCell = row.insertCell();
+                    const carTypeCell = row.insertCell();
+                    const carBrandCell = row.insertCell();
+                    const deleteCell = row.insertCell();
+                    idCell.textContent = index+1;
+                    carIdCell.textContent = car.carId;
+                    carTypeCell.textContent = car.cartype;
+                    carBrandCell.textContent = car.carbrand;
+
+                    // Add delete button with click event listener
+                    const deleteBtn = document.createElement("button");
+                    deleteBtn.textContent = "Delete";
+                    deleteBtn.addEventListener("click", function() {
+                        const row = this.parentNode.parentNode;
+                        const carId = row.cells[0].textContent;
+                        // Send DELETE request to server-side endpoint
+                        fetch(`http://localhost:3000/Car_details/${carId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // If response is successful, remove the row from the HTML table
+                                table.deleteRow(row.rowIndex);
+                            } else {
+                                console.error('Error deleting car from database');
+                            }
+                        })
+                        .catch(error => console.error(error));
+                    });
+                    deleteCell.appendChild(deleteBtn);
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>
+
+

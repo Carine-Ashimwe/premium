@@ -1,0 +1,109 @@
+[
+    {
+        "Id": 2,
+        "car": 2,
+        "cartype": "Berlina",
+        "carbrand": "FORD Fiesta",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    },
+    {
+        "Id": 3,
+        "car": 3,
+        "cartype": "Berlina",
+        "carbrand": "HYUNDAI IONIQ",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    },
+    {
+        "Id": 4,
+        "car": 4,
+        "cartype": "Berlina",
+        "carbrand": "VOLKSWAGEN ECO UP",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    },
+    {
+        "Id": 5,
+        "car": 5,
+        "cartype": "Berlina",
+        "carbrand": "BMW",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    },
+    {
+        "Id": 6,
+        "car": 6,
+        "cartype": "Berlina",
+        "carbrand": "Motorolla",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    },
+    {
+        "Id": 7,
+        "car": 7,
+        "cartype": "Berlina",
+        "carbrand": "Carina",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    },
+    {
+        "Id": 8,
+        "car": 8,
+        "cartype": "Berlina",
+        "carbrand": "Corrola",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    },
+    {
+        "Id": 10,
+        "car": 11,
+        "cartype": "Berlina",
+        "carbrand": "VOLKSWAGEN ECO UP",
+        "carpower": 150,
+        "cardisplacement": 1395,
+        "carprice": 385
+    }
+]
+
+
+                 // Add clickable word for edit
+// const editWord = document.createElement("span");
+// editWord.textContent = "Edit";
+// editWord.style.color = "black";
+// editWord.style.cursor = "pointer";
+// editWord.addEventListener("click", function() {
+//     const row = this.parentNode.parentNode;
+//     const carId = row.cells[0].textContent;
+//     const newCarPower = prompt("Enter new car power:");
+//     const newCarDisplacement = prompt("Enter new car displacement:");
+//     const newCarPrice = prompt("Enter new car price:");
+//     // Send PUT request to server-side endpoint to update car details
+//     fetch(`http://localhost:3000/Cars_info/${carId}`, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({carpower: newCarPower, cardisplacement: newCarDisplacement, carprice: newCarPrice})
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//             // If response is successful, update the data in the HTML table
+//             carPowerCell.textContent = newCarPower;
+//             carDisplacementCell.textContent = newCarDisplacement;
+//             carPriceCell.textContent = newCarPrice;
+//             console.log('Car details updated successfully');
+//         } else {
+//             console.error('Error updating car details in database');
+//         }
+//     })
+//     .catch(error => console.error(error));
+// });
+// editCell.appendChild(editWord);   

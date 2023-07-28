@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Datatables</title>
+    <link rel="stylesheet" href="styles/table1.css">
+    <script src="dash.js"></script>
+</head>
+<body>
+    <div class="table2">
+        <h1 class="car-d1">Car_Details</h1>
+    </div>
+    <div class="table-container">
+        <div style="overflow: auto; height: 320px;">
+        <table id="car-table" width="100%" cellspacing="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CarId</th>
+                    <th>Car Type</th>
+                    <th>Car Brand</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+    <script>
+        const table = document.querySelector('#car-table'); // Get reference to the table element in HTML
+        fetch('http://localhost:3000/Car_details') // Update the URL to the correct JSON data source
+            .then(response => response.json()) // Convert response to JSON
+            .then(data => {
+                data.forEach((car,index) => { // Loop through each car object in the JSON data
+                    const row = table.insertRow();
+                    const idCell = row.insertCell();
+                    const carIdCell = row.insertCell();
+                    const carTypeCell = row.insertCell();
+                    const carBrandCell = row.insertCell();
+                    const editCell = row.insertCell();
+                    const deleteCell = row.insertCell();
+                    idCell.textContent = index+1;
+                    carIdCell.textContent = car.carId;
+                    carTypeCell.textContent = car.cartype;
+                    carBrandCell.textContent = car.carbrand;
+
+// Add clickable word for edit
+                    const editWord = document.createElement("span");
+                    editWord.textContent = "Edit";
+                    editWord.style.color = "black";
+                    editWord.style.cursor = "pointer";
+                    editWord.addEventListener("click", function() {
+                        const row = this.parentNode.parentNode;
+                        const carId = row.cells[0].textContent;
+                        const newCarType = prompt("Enter new car type:");
+                        const newCarBrand = prompt("Enter new car brand:");
+                        // Send PUT request to server-side endpoint to update car details
+                        fetch(`http://localhost:3000/Car_details/${carId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({cartype: newCarType, carbrand: newCarBrand})
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // If response is successful, update the data in the HTML table
+                                carTypeCell.textContent = newCarType;
+                                carBrandCell.textContent = newCarBrand;
+                                console.log('Car details updated successfully');
+                            } else {
+                                console.error('Error updating car details in database');
+                            }
+                        })
+                        .catch(error => console.error(error));
+                    });
+                    editCell.appendChild(editWord);
+                    // Add clickable word for delete
+                    const deleteWord = document.createElement("span");
+                    deleteWord.textContent = "Delete";
+                    deleteWord.style.color = "black";
+                    deleteWord.style.cursor = "pointer";
+                    deleteWord.addEventListener("click", function() {
+                        const row = this.parentNode.parentNode;
+                        const carId = row.cells[0].textContent;
+                        // Send DELETE request to server-side endpoint
+                        fetch(`http://localhost:3000/Car_details/${carId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // If response is successful, remove the row from the HTML table
+                                table.deleteRow(row.rowIndex);
+                            } else {
+                                console.error('Error deleting car from database');
+                            }
+                        })
+                        .catch(error => console.error(error));
+                    });
+                    deleteCell.appendChild(deleteWord);
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>
