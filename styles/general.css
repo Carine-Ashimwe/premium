@@ -1772,16 +1772,14 @@ position: relative;
 }
 .fa-chevron-down{
     visibility: visible;
-    position: absolute;
-    padding-left:833px;
-    font-size:35px;
-    margin-top:-80px;
+       
   }
 .drop3{
     display:none;
 }
 .b2{
     margin-top:30px;
+    
 }
 .b20{
 margin-top:370px;
